@@ -3,14 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "./electron/main.js",
+  "main": "public/electron.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
     "concurrently": "^6.2.1",
-    "electron": "^13.2.3",
-    "electron-builder": "^22.11.7",
     "electron-is-dev": "^2.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -23,9 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "ebuild": "npm run build && node_modules/.bin/build",
     "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "startelectron": "NODE_ENV=production electron ."
+    "electron-pack": "electron-builder",
+    "preelectron-pack": "npm run build && electron-builder install-app-deps"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +42,22 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^14.0.0",
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "appId": "com.marconie.${name}",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }
